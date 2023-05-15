@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "dz-13-1-youtube-analytics-project"
+version = "0.1.0"
+description = ""
+authors = ["shishkin015 <shishkin015@gmail.com>"]
+readme = "README.md"
+packages = [{include = "dz_13"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+requests = "^2.31.0"
+google-api-python-client = "^2.95.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
