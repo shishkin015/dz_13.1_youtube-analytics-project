@@ -13,15 +13,15 @@ class PlayList(Video):
         self._title = playlist['items'][0]['snippet']['title']
         self._url = f"https://www.youtube.com/playlist?list={playlist['items'][0]['id']}"
 
-        # Get all the items in the playlist
+        # Вывод элементов плейлиста
         playlist_videos = super().get_service().playlistItems().list(playlistId=playlist_id,
                                                                      part='contentDetails',
                                                                      maxResults=50,
                                                                      ).execute()
-        # Get all the videos id in the playlist
+        # id всех видео
         video_ids: list[str] = [video['contentDetails']['videoId'] for video in playlist_videos['items']]
 
-        # Get all the statistics of the videos in the playlist
+        # Статистика плейлиста
         self.video_response = super().get_service().videos().list(part='contentDetails,statistics',
                                                                   id=','.join(video_ids)
                                                                   ).execute()
