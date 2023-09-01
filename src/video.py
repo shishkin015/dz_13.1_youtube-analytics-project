@@ -2,22 +2,30 @@ from googleapiclient.discovery import build
 import os
 
 API_KEY: str = os.environ.get('YT_API_KEY')
+# YT_API_KEY=AIzaSyAf6fwpr2i-Ks9bT7nDWZJ4piYhj0JFrmg
 
 
 class Video:
     def __init__(self, video_id):
-        self.video_id = video_id
+        try:
+            self.video_id = video_id
 
-        request = Video.get_service().videos().list(
-            part='snippet,statistics,contentDetails,topicDetails',
-            id=video_id,
-            key=API_KEY
-        ).execute()
+            request = Video.get_service().videos().list(
+                part='snippet,statistics,contentDetails,topicDetails',
+                id=video_id,
+                key=API_KEY
+            ).execute()
 
-        self.name_video = request['items'][0]['snippet']['title']
-        self.url_video = f"https://www.youtube.com/watch?v={self.video_id}&ab_channel={request['items'][0]['snippet']['channelTitle']}"
-        self.view_count = request['items'][0]['statistics']['viewCount']
-        self.like_count = request['items'][0]['statistics']['likeCount']
+            self.name_video = request['items'][0]['snippet']['title']
+            self.url_video = f"https://www.youtube.com/watch?v={self.video_id}&ab_channel={request['items'][0]['snippet']['channelTitle']}"
+            self.view_count = request['items'][0]['statistics']['viewCount']
+            self.like_count = request['items'][0]['statistics']['likeCount']
+        except IndexError:
+            print(f"{video_id}: не наедено.")
+            self.name_video = None
+            self.url_video = None
+            self.view_count = None
+            self.like_count = None
 
     def __str__(self):
         return self.name_video
